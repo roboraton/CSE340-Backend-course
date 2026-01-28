@@ -1,0 +1,24 @@
+<!-- Vehicle Details View -->
+
+<div class="inv-detail">
+  <img
+    src="<%= vehicle.inv_image %>"
+    alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>"
+  >
+
+  <div class="inv-info">
+    <h1><%= vehicle.inv_make %> <%= vehicle.inv_model %></h1>
+
+    <p class="price">
+      <%= utilities.formatCurrency(vehicle.inv_price) %>
+    </p>
+
+    <p class="miles">
+      Mileage: <%= utilities.formatMiles(vehicle.inv_miles) %>
+    </p>
+
+    <p class="description">
+      <%= vehicle.inv_description %>
+    </p>
+  </div>
+</div>

@@ -58,6 +58,21 @@ Util.buildClassificationGrid = async function(data){
 }
 
 /* **************************************
+* Format a number as currency
+* ************************************ */
+
+Util.formatCurrency = function (price) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  }).format(price)
+}
+
+Util.formatDate = function (date) {
+  return new Intl.DateTimeFormat('en-US').format(date)
+}
+
+/* **************************************
 * Middleware For Handling Errors
 * Wrap other function in this for
 * General Error Handling

@@ -240,3 +240,25 @@ main {
     padding: 1rem;
   }
 }
+
+/* =====================
+   Inventory Detail View
+===================== */
+
+.inv-detail {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .inv-detail {
+    flex-direction: column;
+  }
+}
+.inv-detail img {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}

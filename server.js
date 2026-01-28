@@ -26,11 +26,14 @@ app.set("layout", "layouts/layout.ejs") // no at views root
  *************************/
 app.use(static)
 
-// Index route
-app.get("/", utilities.handleErrors(baseController.buildHome))
-
 // Inventory routes
 app.use("/inv", inventoryRoute)
+
+// Public static files
+app.use(express.static("public"))
+
+// Index route
+app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
