@@ -72,6 +72,10 @@ Util.formatDate = function (date) {
   return new Intl.DateTimeFormat('en-US').format(date)
 }
 
+Util.formatMiles = function (miles) {
+  return new Intl.NumberFormat('en-US').format(miles) + ' miles'
+}
+
 /* **************************************
 * Middleware For Handling Errors
 * Wrap other function in this for

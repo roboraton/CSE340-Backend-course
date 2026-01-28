@@ -21,6 +21,13 @@ app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "layouts/layout.ejs") // no at views root
 
+
+// Make utilities available to all views
+app.use(async (req, res, next) => {
+  res.locals.utilities = require("./utilities")
+  next()
+})
+
 /* ***********************
  * Routes
  *************************/

@@ -241,24 +241,125 @@ main {
   }
 }
 
-/* =====================
-   Inventory Detail View
-===================== */
+/* =========================
+   Inventory Detail - View
+   ========================= */
 
 .inv-detail {
-  display: flex;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: minmax(280px, 520px) 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin: 1.5rem 0 2rem;
 }
 
-@media (max-width: 768px) {
-  .inv-detail {
-    flex-direction: column;
-  }
-}
 .inv-detail img {
-  max-width: 400px;
   width: 100%;
   height: auto;
-  border: 1px solid #ccc;
+  display: block;
+  border-radius: 14px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+}
+
+/* Right column as a card */
+.inv-info,
+.vehicle-details {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.25rem 1.25rem 1.4rem;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Title */
+.inv-info h1,
+.vehicle-details h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* Price = hero */
+.price {
+  margin: 0.25rem 0 0.9rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+/* Meta rows */
+.miles {
+  margin: 0 0 1rem;
+  font-size: 0.98rem;
+  opacity: 0.85;
+}
+
+/* Description */
+.description {
+  margin: 0.75rem 0 0;
+  line-height: 1.5;
+  max-width: 55ch;
+}
+
+/* Responsive: stack */
+@media (max-width: 900px) {
+  .inv-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .inv-detail img {
+    max-height: 420px;
+    object-fit: cover;
+  }
+}
+
+.price {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.inv-info {
+  background: linear-gradient(#fff, #fafafa);
+}
+
+/* Trigger Error as button */
+footer a {
+  display: inline-block;
+  padding: 0.45rem 0.75rem;
   border-radius: 8px;
+  background: #f3f4f6;
+  color: #444;
+  font-size: 0.85rem;
+  text-decoration: none;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+footer a:hover {
+  background: #e9ebef;
+  color: #111;
+}
+
+/* =========================
+   Inventory - View
+   ========================= */
+#inv-display ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#inv-display li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#inv-display li hr {
+  order: 3;
+  margin: 0.5rem 0;
+}
+#inv-display li a {
+  order: 2;
+  font-weight: 600;
+  color: #2563eb;
 }
