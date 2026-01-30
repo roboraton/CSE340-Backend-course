@@ -1,0 +1,21 @@
+<section class="account">
+  <div class="account-card">
+    <h1><%= title %></h1>
+
+    <%- messages() %>
+
+    <form class="account-form" method="post" action="/account/login">
+      <label for="account_email">Email:</label>
+      <input type="email" name="account_email" id="account_email" required>
+
+      <label for="account_password">Password:</label>
+      <input type="password" name="account_password" id="account_password" required>
+
+      <button class="btn-primary" type="submit">Login</button>
+    </form>
+
+    <p class="account-footer">
+      No account? <a href="/account/register">Sign-up</a>
+    </p>
+  </div>
+</section>
