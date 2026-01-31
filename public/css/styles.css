@@ -403,3 +403,33 @@ main {
     object-fit: cover;
   }
 }
+
+/* =====================
+   Account / Register
+===================== */
+
+/* Secondary button (show password) */
+.btn-secondary {
+  margin: 0.25rem 0 0.5rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.35);
+  background: transparent;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* Password requirements text */
+.password-requirements {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: rgba(255,255,255,0.75);
+}
