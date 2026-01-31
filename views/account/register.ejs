@@ -4,14 +4,22 @@
 
     <%- messages() %>
 
-    <form class="account-form" method="post" action="/account/register">
+    <% if (errors) { %>
+    <ul class ="notice">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %>
+
+    <form id="register-form" class="account-form" method="post" action="/account/register">
 
       <label for="account_firstname">First name</label>
       <input
         type="text"
         id="account_firstname"
         name="account_firstname"
-        required
+        required value ="<%= locals.account_firstname %>"
       >
 
       <label for="account_lastname">Last name</label>
@@ -19,7 +27,7 @@
         type="text"
         id="account_lastname"
         name="account_lastname"
-        required
+        required value ="<%= locals.account_lastname %>"
       >
 
       <label for="account_email">Email address</label>
@@ -27,7 +35,7 @@
         type="email"
         id="account_email"
         name="account_email"
-        required
+        required value ="<%= locals.account_email %>"
       >
 
       <label for="account_password">Password</label>
