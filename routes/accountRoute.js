@@ -13,23 +13,21 @@ router.get("/login", utilities.handleErrors(accountController.buildLogin))
 // Registration view route
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
 
-// Registration processing route
-router.post('/register', utilities.handleErrors(accountController.registerAccount))
-
 // Process the reguistration data
+router.post("/register",regValidate.registrationRules(),regValidate.checkRegData,
+utilities.handleErrors(accountController.registerAccount))
+
+// Process the login request
 router.post(
-    "/register",
-    regValidate.registrationRules(),
-    regValidate.checkRegData,
-    utilities.handleErrors(accountController.registerAccount)
+  "/login",
+  regValidate.loginRules(), regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
 )
 
-// Process the login attempt
-router.post(
-    "/login",
-    (req, res) => {
-        res.status(200).send('login process')
-    }
-)
+router.get(
+  "/", 
+  utilities.checkJWTToken, 
+  utilities.checkLogin, 
+  utilities.handleErrors(accountController.buildAccount))
 
 module.exports = router

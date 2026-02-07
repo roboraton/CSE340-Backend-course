@@ -1,5 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
+const jwt = require("jsonwebtoken")
+require("dotenv").config() // Load .env file contents into process.env
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -87,7 +89,7 @@ Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)
 * Deliver login view
 * ************************************ */
 async function buildLogin(req, res, next) {
-  let nav = await utilities.getNav()
+  let nav = await Util.getNav()
   res.render("account/login", {
     title: "Login",
     nav,
@@ -112,7 +114,42 @@ Util.buildClassificationList = async function (classification_id = null) {
   return classificationList
 }
 
+/* **************************************
+* Middleware to check token validity
+* ************************************ */
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          res.clearCookie("jwt")
+          return res.redirect("/account/login")
+        }
+        res.locals.accountData = accountData
+        res.locals.loggedin = 1
+        next()
+      })
+  } else {
+    next()
+  }
+}
 
-module.exports = {buildLogin}
+/* **************************************
+* Check login
+* ************************************ */
+Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in")
+    return res.redirect("/account/login")
+  }
+}
 
-module.exports = Util
+
+module.exports = {buildLogin, getNav: Util.getNav, buildClassificationGrid: Util.buildClassificationGrid, 
+  buildClassificationList: Util.buildClassificationList, handleErrors: Util.handleErrors , 
+  formatCurrency: Util.formatCurrency, formatDate: Util.formatDate, formatMiles: Util.formatMiles, 
+  checkJWTToken: Util.checkJWTToken, checkLogin: Util.checkLogin}
