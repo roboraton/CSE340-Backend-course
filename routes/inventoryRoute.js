@@ -31,5 +31,13 @@ router.get("/add-inventory",utilities.handleErrors(invController.buildAddInvento
 router.post("/add-inventory",invValidate.inventoryRules(),invValidate.checkInventoryData,
   utilities.handleErrors(invController.addInventory))
 
+// Get route for delete inventory view
+router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteInventory))
+
+// Post route to delete inventory
+router.post("/delete/:inv_id", utilities.handleErrors(invController.deleteInventoryItem))
+
+// Call to deliver delete confirmation view
+router.get("/delete-confirmation",utilities.handleErrors(invController.buildDeleteConfirmation))
 
 module.exports = router;

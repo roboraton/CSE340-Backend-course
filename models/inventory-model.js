@@ -41,6 +41,9 @@ async function getInventoryByInvId(inv_id) {
     }
 }
 
+/* ******************
+* Add classification to database
+* ******************** */
 
 async function addClassification(classification_name) {
   try {
@@ -51,6 +54,10 @@ async function addClassification(classification_name) {
     return error.message
   }
 }
+
+/* ******************
+* Add inventory item to database
+* ******************** */
 
 async function addInventory( inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id ) {
   try {
@@ -75,4 +82,19 @@ async function addInventory( inv_make, inv_model, inv_description, inv_image, in
   }
 }
 
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryByInvId, addClassification, addInventory }
+/* ******************
+* Delete inventory item from database
+* ******************** */
+
+async function deleteInventoryItem(inv_id) {
+  try {
+    const sql = `DELETE FROM inventory WHERE inv_id = $1 RETURNING *`
+    return await pool.query(sql, [inv_id])
+  } catch (error) {
+    throw new Error("Error deleting inventory item")
+  }
+}
+
+
+
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryByInvId, addClassification, addInventory, deleteInventoryItem }

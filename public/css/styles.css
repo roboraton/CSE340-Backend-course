@@ -536,3 +536,80 @@ section ul a {
 section ul a:hover {
   text-decoration: underline;
 }
+
+/* ===== Delete confirmation page ===== */
+
+.delete-confirm {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #0f1f2b;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+.delete-confirm h1 {
+  margin-bottom: 1rem;
+  color: #ffb4b4;
+}
+
+.delete-confirm .warning {
+  background: rgba(255, 80, 80, 0.15);
+  border-left: 4px solid #ff4d4d;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.delete-confirm label {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #b9c7d6;
+}
+
+.delete-confirm input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  background: #1a2b3a;
+  border: none;
+  border-radius: 6px;
+  color: #eaeaea;
+}
+
+.delete-confirm button {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #ff4d4d, #c62828);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.delete-confirm button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(255, 77, 77, 0.4);
+}
+
+.delete-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  color: #ff6b6b;
+  border: 2px solid #ff6b6b;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.delete-link:hover {
+  background: #ff6b6b;
+  color: #0f1f2b;
+}
