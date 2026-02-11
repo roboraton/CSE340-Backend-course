@@ -1,5 +1,5 @@
-<section class="account">
-  <div class="account-card">
+<section class="account account-logged">
+  <div class="account-logged-card">
     <h1><%= title %></h1>
 
     <%- messages() %>
@@ -17,7 +17,7 @@
 
     <!-- Update account (siempre visible) -->
     <p>
-      <a href="/account/update/<%= accountData.account_id %>">
+      <a class="btn btn-primary" href="/account/update/<%= accountData.account_id %>">
         Update Account Information
       </a>
     </p>

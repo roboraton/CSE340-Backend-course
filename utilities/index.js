@@ -152,7 +152,7 @@ Util.checkLogin = (req, res, next) => {
 * Check if user is admin or employee
 * ************************************ */
 
-utilities.checkAdminEmployee = (req, res, next) => {
+Util.checkAdminEmployee = (req, res, next) => {
   const token = req.cookies.jwt
 
   if (!token) {
@@ -185,4 +185,4 @@ utilities.checkAdminEmployee = (req, res, next) => {
 module.exports = {buildLogin, getNav: Util.getNav, buildClassificationGrid: Util.buildClassificationGrid, 
   buildClassificationList: Util.buildClassificationList, handleErrors: Util.handleErrors , 
   formatCurrency: Util.formatCurrency, formatDate: Util.formatDate, formatMiles: Util.formatMiles, 
-  checkJWTToken: Util.checkJWTToken, checkLogin: Util.checkLogin}
+  checkJWTToken: Util.checkJWTToken, checkLogin: Util.checkLogin, checkAdminEmployee: Util.checkAdminEmployee}

@@ -622,15 +622,6 @@ section ul a:hover {
   padding: 2rem 1rem;
 }
 
-.account-card {
-  width: 100%;
-  max-width: 520px;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-}
-
 .account-card h1 {
   text-align: center;
   margin-bottom: 1.5rem;
@@ -702,3 +693,63 @@ section ul a:hover {
   padding: 0.75rem;
   border-left: 4px solid #f0ad4e;
 }
+
+
+/* =====================
+   Account Logged View
+===================== */
+
+.account-logged {
+  min-height: calc(100vh - 140px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+.account-logged-card {
+  width: 100%;
+  max-width: 520px;
+  background: linear-gradient(145deg, #ffffff, #f3f4f6);
+  padding: 2.2rem;
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+.account-logged-card h1 {
+  margin-bottom: 0.75rem;
+  font-size: 1.8rem;
+  color: #111827;
+}
+
+.logged-text {
+  font-size: 1rem;
+  color: #374151;
+  margin-bottom: 2rem;
+}
+
+/* Action buttons container */
+.logged-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* Reusable primary button style */
+.logged-actions .btn-primary {
+  display: inline-block;
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  background: #9525eb;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.logged-actions .btn-primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(37,99,235,0.35);
+}
+

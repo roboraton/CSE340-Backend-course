@@ -40,16 +40,16 @@ router.get(
 // process account update
 router.post(
   "/update-account",
-  accountValidate.updateRules(),
-  accountValidate.checkUpdateData,
+  regValidate.updateRules(),
+  regValidate.checkUpdateData,
   utilities.handleErrors(accountController.updateAccount)
 )
 
 // process password change
 router.post(
   "/update-password",
-  accountValidate.passwordRules(),
-  accountValidate.checkPasswordData,
+  regValidate.passwordRules(),
+  regValidate.checkPasswordData,
   utilities.handleErrors(accountController.updatePassword)
 )
 
