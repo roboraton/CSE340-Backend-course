@@ -148,6 +148,39 @@ Util.checkLogin = (req, res, next) => {
   }
 }
 
+/* **************************************
+* Check if user is admin or employee
+* ************************************ */
+
+utilities.checkAdminEmployee = (req, res, next) => {
+  const token = req.cookies.jwt
+
+  if (!token) {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+
+    if (
+      decoded.account_type === "Employee" ||
+      decoded.account_type === "Admin"
+    ) {
+      res.locals.accountData = decoded
+      res.locals.loggedin = true
+      return next()
+    } else {
+      req.flash("notice", "You are not authorized to access this area.")
+      return res.redirect("/account/login")
+    }
+
+  } catch (error) {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
+
 
 module.exports = {buildLogin, getNav: Util.getNav, buildClassificationGrid: Util.buildClassificationGrid, 
   buildClassificationList: Util.buildClassificationList, handleErrors: Util.handleErrors , 

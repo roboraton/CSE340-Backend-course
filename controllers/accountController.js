@@ -127,5 +127,86 @@ accountController.buildAccount = async function (req, res) {
   })
 }
 
+/* ************************
+ * Deliver update account view
+ ************************ */
+
+accountController.buildUpdateAccount = async function (req, res) {
+  let nav = await utilities.getNav()
+  const accountData = res.locals.accountData
+
+  res.render("account/update", {
+    title: "Update Account",
+    nav,
+    accountData,
+    errors: null,
+  })
+}
+
+/* ************************
+ * Process account update
+ ************************ */
+
+accountController.updateAccount = async function (req, res) {
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
+  let nav = await utilities.getNav()
+
+  const updateResult = await accountModel.updateAccount(
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_id
+  )
+
+  if (updateResult) {
+    req.flash("notice", "Account updated successfully.")
+    res.redirect("/account/")
+  } else {
+    req.flash("notice", "Update failed.")
+    res.render("account/update", {
+      title: "Update Account",
+      nav,
+      errors: null,
+      accountData: req.body,
+    })
+  }
+}
+
+/* ************************
+ * Process password change
+ ************************ */
+
+accountController.updatePassword = async function (req, res) {
+  const { account_id, account_password } = req.body
+  let nav = await utilities.getNav()
+
+  const hashedPassword = await bcrypt.hash(account_password, 10)
+
+  const result = await accountModel.updatePassword(hashedPassword, account_id)
+
+  if (result) {
+    req.flash("notice", "Password updated successfully.")
+    res.redirect("/account/")
+  } else {
+    req.flash("notice", "Password update failed.")
+    res.render("account/update", {
+      title: "Update Account",
+      nav,
+      errors: null,
+      accountData: res.locals.accountData,
+    })
+  }
+}
+
+/* ************************
+ * Process logout
+ ************************ */
+accountController.accountLogout = async function (req, res) {
+  res.clearCookie("jwt")        //  borra JWT
+  req.session.destroy()         //  mata sesión
+  res.redirect("/")             //  home
+}
+
+
 
 module.exports =  accountController

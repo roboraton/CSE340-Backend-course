@@ -61,6 +61,8 @@ app.use(async (req, res, next) => {
   next()
 })
 
+app.use(utilities.checkJWTToken)
+
 /* ***********************
  * Routes
  *************************/
