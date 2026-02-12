@@ -7,13 +7,14 @@ const utilities = require("../utilities/")
 
 const invValidate = require("../utilities/inventory-validation")
 
-
+// PUBLIC ROUTES
 // Route to build inventory by classification view
-router.get("/type/:classificationId", utilities.checkAdminEmployee,utilities.handleErrors(invController.buildByClassificationId))
+router.get("/type/:classificationId",utilities.handleErrors(invController.buildByClassificationId))
 
 // Route to build inventory detail view
-router.get("/detail/:inv_id", utilities.checkAdminEmployee,utilities.handleErrors(invController.buildByInventory))
+router.get("/detail/:inv_id",utilities.handleErrors(invController.buildByInventory))
 
+// NON-PUBLIC ROUTES
 // Inventory management view
 router.get("/", utilities.checkAdminEmployee,utilities.handleErrors(invController.buildManagement))
 

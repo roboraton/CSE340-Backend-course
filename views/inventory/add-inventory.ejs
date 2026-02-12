@@ -1,40 +1,121 @@
 <section class="inventory">
 
-<h1><%= title %></h1>
+  <!-- Título dinámico enviado desde el controller -->
+  <h1><%= title %></h1>
 
-<%- messages() %>
+  <!-- Mensajes flash del sistema (si los usas) -->
+  <%- messages() %>
 
-<form method="post" action="/inv/add-inventory">
+  <!-- Mostrar errores de validación del backend -->
+  <!-- IMPORTANTE: esto es lo que se esperaba cuando se quitó el required desde DevTools -->
+  <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
 
-  <label for="classificationList">Classification</label>
-  <%- classificationList %>
+  <form method="post" action="/inv/add-inventory">
 
-  <label for="inv_make">Maker</label>
-  <input type="text" name="inv_make" id="inv_make" required>
+    <!-- Select de clasificación -->
+    <!-- classificationList ya viene armado desde utilities.buildClassificationList() -->
+    <label for="classification_id">Classification</label>
+    <%- classificationList %>
 
-  <label for="inv_model">Model</label>
-  <input type="text" name="inv_model" id="inv_model" required>
+    <!-- Maker -->
+    <!-- STICKY FORM: usamos el valor que regresamos desde req.body -->
+    <label for="inv_make">Maker</label>
+    <input 
+      type="text" 
+      name="inv_make" 
+      id="inv_make" 
+      value="<%= inv_make || '' %>" 
+      required
+    >
 
-  <label for="inv_description">Description</label>
-  <textarea name="inv_description" id="inv_description" required></textarea>
+    <!-- Model -->
+    <label for="inv_model">Model</label>
+    <input 
+      type="text" 
+      name="inv_model" 
+      id="inv_model" 
+      value="<%= inv_model || '' %>" 
+      required
+    >
 
-  <label for="inv_image">Image Path</label>
-  <input type="text" name="inv_image" id="inv_image" value="/images/no-image.png" required>
+    <!-- Description -->
+    <!-- En textarea el valor va ENTRE las etiquetas -->
+    <label for="inv_description">Description</label>
+    <textarea 
+      name="inv_description" 
+      id="inv_description" 
+      required
+    ><%= inv_description || '' %></textarea>
 
-  <label for="inv_thumbnail">Thumbnail Path</label>
-  <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="/images/no-image-tn.png" required>
+    <!-- Image Path -->
+    <!-- Si el usuario escribió algo, lo respetamos. Si no, ponemos default -->
+    <label for="inv_image">Image Path</label>
+    <input 
+      type="text" 
+      name="inv_image" 
+      id="inv_image" 
+      value="<%= inv_image || '/images/vehicles/no-image.png' %>" 
+      required
+    >
 
-  <label for="inv_price">Price</label>
-  <input type="number" step="0.01" name="inv_price" id="inv_price" required>
+    <!-- Thumbnail Path -->
+    <label for="inv_thumbnail">Thumbnail Path</label>
+    <input 
+      type="text" 
+      name="inv_thumbnail" 
+      id="inv_thumbnail" 
+      value="<%= inv_thumbnail || '/images/vehicles/no-image-tn.png' %>" 
+      required
+    >
 
-  <label for="inv_year">Year</label>
-  <input type="number" name="inv_year" id="inv_year" required>
+    <!-- Price -->
+    <label for="inv_price">Price</label>
+    <input 
+      type="number" 
+      step="0.01" 
+      name="inv_price" 
+      id="inv_price" 
+      value="<%= inv_price || '' %>" 
+      required
+    >
 
-  <label for="inv_miles">Miles</label>
-  <input type="number" name="inv_miles" id="inv_miles" required>
+    <!-- Year -->
+    <label for="inv_year">Year</label>
+    <input 
+      type="number" 
+      name="inv_year" 
+      id="inv_year" 
+      value="<%= inv_year || '' %>" 
+      required
+    >
 
-  <label for="inv_color">Color</label>
-  <input type="text" name="inv_color" id="inv_color" required>
+    <!-- Miles -->
+    <label for="inv_miles">Miles</label>
+    <input 
+      type="number" 
+      name="inv_miles" 
+      id="inv_miles" 
+      value="<%= inv_miles || '' %>" 
+      required
+    >
 
-  <button type="submit">Add Inventory</button>
-</form>
+    <!-- Color -->
+    <label for="inv_color">Color</label>
+    <input 
+      type="text" 
+      name="inv_color" 
+      id="inv_color" 
+      value="<%= inv_color || '' %>" 
+      required
+    >
+
+    <button type="submit">Add Inventory</button>
+  </form>
+
+</section>

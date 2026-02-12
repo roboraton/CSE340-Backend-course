@@ -35,8 +35,8 @@ validate.inventoryRules = () => {
     body("inv_make").trim().escape().notEmpty().withMessage("Maker is required."),
     body("inv_model").trim().escape().notEmpty().withMessage("Model is required."),
     body("inv_description").trim().escape().notEmpty().withMessage("Description is required."),
-    body("inv_image").trim().escape().notEmpty().withMessage("Image path is required."),
-    body("inv_thumbnail").trim().escape().notEmpty().withMessage("Thumbnail path is required."),
+    body("inv_image").trim().notEmpty().withMessage("Image path is required."), // No se usa .escape() porque es una ruta de archivo.
+    body("inv_thumbnail").trim().notEmpty().withMessage("Thumbnail path is required."), // Escapar convertiría los "/" en entidades HTML y rompería la URL.
     body("inv_price").isFloat({ min: 0 }).withMessage("Price must be a valid number greater than 0."),
     body("inv_year").isInt({ min: 1800, max: 2100 }).withMessage("Year must be a valid integer between 1800 and 2100."),
     body("inv_miles").isInt({ min: 0 }).withMessage("Miles must be a valid integer greater than or equal to 0."),
