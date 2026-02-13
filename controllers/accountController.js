@@ -99,6 +99,9 @@ accountController.accountLogin = async function (req, res) {
       if (process.env.NODE_ENV === "development") {
         res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 360 * 1000 }) // 6 hours
       }
+      else if (process.env.NODE_ENV === "production") {
+        res.cookie("jwt", accessToken, { httpOnly: true, secure: true, sameSite: "lax", maxAge: 360 * 1000 }) // 6 hours
+      } 
       return res.redirect("/account/")
     }
     else {
