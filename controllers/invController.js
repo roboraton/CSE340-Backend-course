@@ -6,13 +6,16 @@ const invCont = {}
 /* ************************
  * Build inventory by classificationId view
  ************************** */
-invCont.buildByClassificationId = async function (req, res, next) {
+invCont.buildByClassificationId = async function (req, res) {
   const classificationId = req.params.classificationId
   const data = await invModel.getInventoryByClassificationId(classificationId)
   const grid = await utilities.buildClassificationGrid(data)
 
   let nav = await utilities.getNav()
-  const className = data[0].classification_name
+  const className =
+    data && data.length > 0
+      ? data[0].classification_name
+      : "Vehicles"
 
   res.render("inventory/classification", {
     title: className + " vehicles",
@@ -24,12 +27,9 @@ invCont.buildByClassificationId = async function (req, res, next) {
 /* ************************
  * Build inventory detail view
  ************************** */
-
-invCont.buildByInventory = async function (req, res, next) {
+invCont.buildByInventory = async function (req, res) {
   const inv_id = req.params.inv_id
-  
   const data = await invModel.getInventoryByInvId(inv_id)
-
   const nav = await utilities.getNav()
 
   res.render("inventory/detail", {
@@ -50,6 +50,9 @@ invCont.buildManagement = async function (req, res) {
   })
 }
 
+/* ************************
+ * Deliver add classification view
+ ************************ */
 invCont.buildAddClassification = async function (req, res) {
   let nav = await utilities.getNav()
   res.render("inventory/add-classification", {
@@ -62,16 +65,15 @@ invCont.buildAddClassification = async function (req, res) {
 /* ************************
  * Add classification
  ************************ */
-
 invCont.addClassification = async function (req, res) {
   let nav = await utilities.getNav()
   const { classification_name } = req.body
 
   const result = await invModel.addClassification(classification_name)
 
-  if (result) {
+  if (result && result.rowCount > 0) {
     req.flash("notice", "Classification added successfully.")
-    nav = await utilities.getNav() // 🔥 navbar actualizado
+    nav = await utilities.getNav()
     res.render("inventory/management", {
       title: "Inventory Management",
       nav,
@@ -117,28 +119,27 @@ invCont.addInventory = async function (req, res) {
     inv_price,
     inv_year,
     inv_miles,
-    inv_color
+    inv_color,
   } = req.body
 
-const invResult = await invModel.addInventory(
-  inv_make,
-  inv_model,
-  inv_description,
-  inv_image,
-  inv_thumbnail,
-  inv_price,
-  inv_year,
-  inv_miles,
-  inv_color,
-  classification_id
-)
+  const invResult = await invModel.addInventory(
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id
+  )
 
-
-  if (invResult && invResult.rows && invResult.rows.length > 0) {
+  if (invResult && invResult.rowCount > 0) {
     req.flash("notice", "Inventory added successfully.")
     res.redirect("/inv")
-  }
-   else {let classificationList =
+  } else {
+    let classificationList =
       await utilities.buildClassificationList(classification_id)
 
     res.render("inventory/add-inventory", {
@@ -155,21 +156,16 @@ const invResult = await invModel.addInventory(
  *************************** */
 invCont.buildDeleteInventory = async function (req, res) {
   const inv_id = req.params.inv_id
-
-  // navigation
   let nav = await utilities.getNav()
-
-  // get inventory item
   const inventory = await invModel.getInventoryByInvId(inv_id)
 
-  // title
   const itemName = `${inventory.inv_make} ${inventory.inv_model}`
 
   res.render("inventory/delete-confirm", {
     title: `Delete ${itemName}`,
     nav,
     errors: null,
-    inventory
+    inventory,
   })
 }
 
@@ -178,11 +174,9 @@ invCont.buildDeleteInventory = async function (req, res) {
  *************************** */
 invCont.deleteInventoryItem = async function (req, res) {
   const inv_id = parseInt(req.body.inv_id)
-  let nav = await utilities.getNav()
-
   const deleteResult = await invModel.deleteInventoryItem(inv_id)
 
-  if (deleteResult) {
+  if (deleteResult && deleteResult.rowCount > 0) {
     req.flash("notice", "The inventory item was successfully deleted.")
     res.redirect("/inv/")
   } else {
@@ -191,6 +185,76 @@ invCont.deleteInventoryItem = async function (req, res) {
   }
 }
 
+/* ***************************
+ * Build edit inventory view
+ *************************** */
+invCont.buildEditInventory = async function (req, res) {
+  const inv_id = req.params.inv_id
+  let nav = await utilities.getNav()
+  const inventory = await invModel.getInventoryByInvId(inv_id)
+
+  let classificationList =
+    await utilities.buildClassificationList(inventory.classification_id)
+
+  res.render("inventory/edit-inventory", {
+    title: `Edit ${inventory.inv_make} ${inventory.inv_model}`,
+    nav,
+    inventory,
+    classificationList,
+    errors: null,
+  })
+}
+
+/* ***************************
+ * Carry out inventory edit
+ *************************** */
+invCont.editInventoryItem = async function (req, res) {
+  const {
+    inv_id,
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+  } = req.body
+
+  let nav = await utilities.getNav()
+
+  const updateResult = await invModel.editInventoryItem(
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id,
+    inv_id
+  )
+
+  if (updateResult && updateResult.rowCount > 0) {
+    req.flash("notice", "The inventory item was successfully updated.")
+    res.redirect("/inv")
+  } else {
+    let classificationList =
+      await utilities.buildClassificationList(classification_id)
+
+    res.render("inventory/edit-inventory", {
+      title: `Edit ${inv_make} ${inv_model}`,
+      nav,
+      inventory: req.body,   //  esto permite sticky
+      classificationList,
+      errors: null,
+    })
+  }
+}
 
 
 module.exports = invCont

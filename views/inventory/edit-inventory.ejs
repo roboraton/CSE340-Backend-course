@@ -1,0 +1,120 @@
+<section class="inventory">
+
+  <h1><%= title %></h1>
+
+  <!-- Mensajes flash -->
+  <%- messages() %>
+
+  <!-- Mostrar errores si existen -->
+  <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <form method="post" action="/inv/edit-inventory">
+
+    <!-- 🔥 IMPORTANTE: enviar el ID oculto -->
+    <input type="hidden" name="inv_id" 
+      value="<%= inventory.inv_id %>">
+
+    <!-- Classification -->
+    <label for="classification_id">Classification</label>
+    <%- classificationList %>
+
+    <!-- Maker -->
+    <label for="inv_make">Maker</label>
+    <input 
+      type="text"
+      id="inv_make"
+      name="inv_make"
+      value="<%= inventory.inv_make %>"
+      required
+    >
+
+    <!-- Model -->
+    <label for="inv_model">Model</label>
+    <input 
+      type="text"
+      id="inv_model"
+      name="inv_model"
+      value="<%= inventory.inv_model %>"
+      required
+    >
+
+    <!-- Description -->
+    <label for="inv_description">Description</label>
+    <textarea 
+      id="inv_description"
+      name="inv_description"
+      required
+    ><%= inventory.inv_description %></textarea>
+
+    <!-- Image -->
+    <label for="inv_image">Image Path</label>
+    <input 
+      type="text"
+      id="inv_image"
+      name="inv_image"
+      value="<%= inventory.inv_image %>"
+      required
+    >
+
+    <!-- Thumbnail -->
+    <label for="inv_thumbnail">Thumbnail Path</label>
+    <input 
+      type="text"
+      id="inv_thumbnail"
+      name="inv_thumbnail"
+      value="<%= inventory.inv_thumbnail %>"
+      required
+    >
+
+    <!-- Price -->
+    <label for="inv_price">Price</label>
+    <input 
+      type="number"
+      step="0.01"
+      id="inv_price"
+      name="inv_price"
+      value="<%= inventory.inv_price %>"
+      required
+    >
+
+    <!-- Year -->
+    <label for="inv_year">Year</label>
+    <input 
+      type="number"
+      id="inv_year"
+      name="inv_year"
+      value="<%= inventory.inv_year %>"
+      required
+    >
+
+    <!-- Miles -->
+    <label for="inv_miles">Miles</label>
+    <input 
+      type="number"
+      id="inv_miles"
+      name="inv_miles"
+      value="<%= inventory.inv_miles %>"
+      required
+    >
+
+    <!-- Color -->
+    <label for="inv_color">Color</label>
+    <input 
+      type="text"
+      id="inv_color"
+      name="inv_color"
+      value="<%= inventory.inv_color %>"
+      required
+    >
+
+    <button type="submit">Update Inventory</button>
+
+  </form>
+
+</section>

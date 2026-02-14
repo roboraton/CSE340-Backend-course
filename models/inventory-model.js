@@ -95,6 +95,41 @@ async function deleteInventoryItem(inv_id) {
   }
 }
 
+/* ******************
+* Edit inventory item in database
+* ******************** */
+async function editInventoryItem(inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id, inv_id) {
+  try {
+    const sql = `UPDATE inventory SET
+      inv_make = $1,
+      inv_model = $2,
+      inv_description = $3,
+      inv_image = $4,
+      inv_thumbnail = $5,
+      inv_price = $6,
+      inv_year = $7,
+      inv_miles = $8,
+      inv_color = $9,
+      classification_id = $10
+    WHERE inv_id = $11 RETURNING *`
+
+    return await pool.query(sql, [
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id,
+      inv_id
+    ])
+  } catch (error) {
+    throw new Error("Error editing inventory item")
+  }
+}
 
 
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryByInvId, addClassification, addInventory, deleteInventoryItem }
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryByInvId, addClassification, addInventory, deleteInventoryItem, editInventoryItem }

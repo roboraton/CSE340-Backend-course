@@ -17,11 +17,17 @@
       Mileage: <%= utilities.formatMiles(vehicle.inv_miles) %>
     </p>
 
+    <p class="color">
+      Color: <%= vehicle.inv_color %>
+    </p>
+
     <p class="description">
       <%= vehicle.inv_description %>
     </p>
 
     <a href="/inv/delete/<%= vehicle.inv_id %>" class="delete-link">Delete</a>
+
+    <a href="/inv/edit-inventory/<%= vehicle.inv_id %>" class="btn btn-primary">Edit</a>
 
   </div>
 </div>

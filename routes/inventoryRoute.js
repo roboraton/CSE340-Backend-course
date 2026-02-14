@@ -41,4 +41,13 @@ router.post("/delete/:inv_id", utilities.checkAdminEmployee,utilities.handleErro
 // Call to deliver delete confirmation view
 router.get("/delete-confirmation",utilities.checkAdminEmployee,utilities.handleErrors(invController.buildDeleteConfirmation))
 
+// Get route for edit inventory view
+router.get("/edit-inventory/:inv_id", utilities.checkAdminEmployee,utilities.handleErrors(invController.buildEditInventory))
+
+// Post route to edit inventory
+router.post("/edit-inventory",utilities.checkAdminEmployee,invValidate.inventoryRules(),invValidate.checkInventoryData,
+  utilities.handleErrors(invController.editInventoryItem)
+)
+
+
 module.exports = router;
