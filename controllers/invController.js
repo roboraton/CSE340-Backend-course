@@ -100,6 +100,15 @@ invCont.buildAddInventory = async function (req, res) {
     nav,
     classificationList,
     errors: null,
+    inv_make: "",
+    inv_model: "",
+    inv_description: "",
+    inv_image: "",
+    inv_thumbnail: "",
+    inv_price: "",
+    inv_year: "",
+    inv_miles: "",
+    inv_color: "",
   })
 }
 
